@@ -10,7 +10,7 @@ function handleQuote(value) {
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
-  const cidade = query.cidade.split(',')[0].toUpperCase();
+  const cidade = query.cidade?.split(',')[0].toUpperCase();
   const descricao = handleQuote(query.descricaoFilter);
 
   const municipio = query.cidadeFilter;
@@ -25,10 +25,8 @@ export default (query) => {
   function getString(column) {
     let begin,
       end = null;
-    begin = dataInicio;
-    end = dataFim;
-    begin = begin && `convert(date,'${begin}',103)`;
-    end = end && `convert(date,'${end}',103)`;
+    begin = dataInicio && `convert(date,'${dataInicio}',103)`;
+    end = dataFim && `convert(date,'${dataFim}',103)`;
 
     if (end) {
       return begin

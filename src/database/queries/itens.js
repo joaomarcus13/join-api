@@ -10,7 +10,7 @@ function handleQuote(value) {
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
-  const cidade = query.cidade?.split(',')[0]?.toUpperCase().trim() || '';
+  const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
   const descricao = handleQuote(query.descricaoFilter);
 
   const municipio = query.cidadeFilter;
@@ -58,10 +58,8 @@ export default (query) => {
       begin = valorMinimo ? valorMinimo.replace(',', '.') : null;
       end = valorMaximo ? valorMaximo.replace(',', '.') : null;
     } else {
-      begin = dataInicio;
-      end = dataFim;
-      begin = begin && `convert(date,'${begin}',103)`;
-      end = end && `convert(date,'${end}',103)`;
+      begin = dataInicio && `convert(date,'${dataInicio}',103)`;
+      end = dataFim && `convert(date,'${dataFim}',103)`;
     }
 
     if (end) {
@@ -77,8 +75,8 @@ export default (query) => {
       --declare @id_lic_finalizada int =  516907
       --declare @Qtd_lic_finalizada int
       --Select @Qtd_lic_finalizada = (Select count(*) From licitacoesweb.licitacao Where ID_STATUS_LICITACAO = 3)
-      DECLARE @limit INT = ${limit},
-              @page  INT = ${page};
+      DECLARE @limit INT = ${limit || 20},
+              @page  INT = ${page || 1};
   
       select 
              --@Qtd_lic_finalizada Qtd_lic_finalizada, 
