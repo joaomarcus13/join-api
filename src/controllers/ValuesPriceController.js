@@ -8,7 +8,7 @@ export default {
     console.log('string', queryString);
     // return response.json(mock);
     // console.log('query', request.query.referencePrice);
-    return response.json({ values: { max: 100, min: 10, avg: 50 } });
+    // return response.json({ values: { max: 100, min: 10, avg: 50 } });
     try {
       const result = await db(queryString);
       // console.log(result.recordset[0]);

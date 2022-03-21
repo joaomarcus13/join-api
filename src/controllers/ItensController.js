@@ -143,9 +143,10 @@ const mock = {
 export default {
   async index(request, response) {
     const { descricaoFilter } = request.query;
+    console.log(request.query);
     const queryString = queryItens(request.query);
     console.log('string', queryString);
-    return response.json(mock);
+    // return response.json(mock);
     try {
       const result = await db(queryString);
       // console.log(format(result.recordset, descricaoFilter));

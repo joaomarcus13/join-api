@@ -49,7 +49,8 @@ export default (query) => {
     return reference[referencePrice] || '';
   }
 
-  function getString(column) {
+  function getString(column = 'lic.DATA_HOMOLOGACAO') {
+    console.log('column', column);
     let begin,
       end = null;
     if (column == 'i.VALOR_UNITARIO') {
@@ -58,10 +59,8 @@ export default (query) => {
       begin = valorMinimo ? valorMinimo.replace(',', '.') : null;
       end = valorMaximo ? valorMaximo.replace(',', '.') : null;
     } else {
-      begin = dataInicio;
-      end = dataFim;
-      begin = begin && `convert(date,'${begin}',103)`;
-      end = end && `convert(date,'${end}',103)`;
+      begin = dataInicio && `convert(date,'${dataInicio}',103)`;
+      end = dataFim && `convert(date,'${dataFim}',103)`;
     }
 
     if (end) {
@@ -77,8 +76,8 @@ export default (query) => {
       --declare @id_lic_finalizada int =  516907
       --declare @Qtd_lic_finalizada int
       --Select @Qtd_lic_finalizada = (Select count(*) From licitacoesweb.licitacao Where ID_STATUS_LICITACAO = 3)
-      DECLARE @limit INT = ${limit},
-              @page  INT = ${page};
+      DECLARE @limit INT = ${limit || 20},
+              @page  INT = ${page || 1};
   
       select 
              --@Qtd_lic_finalizada Qtd_lic_finalizada, 

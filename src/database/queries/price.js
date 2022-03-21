@@ -10,7 +10,7 @@ function handleQuote(value) {
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
-  const cidade = query.cidade.split(',')[0].toUpperCase();
+  const cidade = query.cidade?.split(',')[0].toUpperCase();
   const descricao = handleQuote(query.descricaoFilter);
 
   const municipio = query.cidadeFilter;
@@ -22,7 +22,7 @@ export default (query) => {
   const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
   const dataFim = parse(query.periodoHomologacaoFilter)?.end;
 
-  function getString(column) {
+  function getString(column = 'lic.DATA_HOMOLOGACAO') {
     let begin,
       end = null;
     begin = dataInicio;
