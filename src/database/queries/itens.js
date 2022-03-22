@@ -10,7 +10,7 @@ function handleQuote(value) {
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
-  const cidade = query.cidade?.split(',')[0]?.toUpperCase().trim() || '';
+  const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
   const descricao = handleQuote(query.descricaoFilter);
 
   const municipio = query.cidadeFilter;

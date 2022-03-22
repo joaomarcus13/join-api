@@ -25,10 +25,8 @@ export default (query) => {
   function getString(column = 'lic.DATA_HOMOLOGACAO') {
     let begin,
       end = null;
-    begin = dataInicio;
-    end = dataFim;
-    begin = begin && `convert(date,'${begin}',103)`;
-    end = end && `convert(date,'${end}',103)`;
+    begin = dataInicio && `convert(date,'${dataInicio}',103)`;
+    end = dataFim && `convert(date,'${dataFim}',103)`;
 
     if (end) {
       return begin

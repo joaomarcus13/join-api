@@ -65,7 +65,8 @@ const captureQuote = (value) => {
         .replaceAll(' ', '\\b.*\\b');
 };
 
-const accent = (text) => text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+export const accent = (text) =>
+  text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
 const isValid = (descricao, descricaoFilter) => {
   if (!descricaoFilter) return true;
