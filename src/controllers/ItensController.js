@@ -144,7 +144,7 @@ export default {
   async index(request, response) {
     const { descricaoFilter } = request.query;
     const queryString = queryItens(request.query);
-    console.log(request.query);
+    // console.log(request.query);
     // console.log('string', queryString);
     return response.json(mock);
     try {

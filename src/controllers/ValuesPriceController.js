@@ -5,7 +5,7 @@ import format from '../util/formatValues.js';
 export default {
   async index(request, response) {
     const queryString = queryValues(request.query);
-    console.log('string', queryString);
+    // console.log('string', queryString);
     // return response.json(mock);
     // console.log('query', request.query.referencePrice);
     return response.json({ values: { max: 100, min: 10, avg: 50 } });
