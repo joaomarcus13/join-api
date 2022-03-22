@@ -24,19 +24,10 @@ export default (query) => {
   let { page, limit, sort, order } = query;
 
   let referencePrice = query.referencePrice;
-  //console.log('referencePrice', referencePrice);
 
   const maxValue = parse(query.valuesAmplitude)?.max;
   const minValue = parse(query.valuesAmplitude)?.min;
-  const avgValue = parse(query.valuesAmplitude)?.avg;
-
-  // console.log(page);
-  // console.log(query);
-
-  // console.log('max', maxValue);
-  // console.log('min', minValue);
-  // console.log('calc max', maxValue - (maxValue - minValue) * 0.3);
-  // console.log('calc min', minValue + (maxValue - minValue) * 0.3);
+  // const avgValue = parse(query.valuesAmplitude)?.avg;
 
   function getReferencePrice() {
     const reference = {
@@ -50,7 +41,6 @@ export default (query) => {
   }
 
   function getString(column = 'lic.DATA_HOMOLOGACAO') {
-    console.log('column', column);
     let begin,
       end = null;
     if (column == 'i.VALOR_UNITARIO') {
