@@ -8,7 +8,7 @@ export default async function db(queryString, database = 'compras') {
     conn.close();
     return result;
   } catch (err) {
-    console.log(err);
+    // console.log(err);
     throw new Error(err);
   }
 }

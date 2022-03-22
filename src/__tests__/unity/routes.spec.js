@@ -11,7 +11,6 @@ describe('Get itens', () => {
       valuesAmplitude: undefined,
     };
     const response = await superTest(app).get('/itens').query(query);
-    console.log(response.status);
     expect(response.status).toEqual(200);
     expect(JSON.parse(response.text)).toHaveProperty('itens');
   });

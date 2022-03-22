@@ -4,7 +4,7 @@ export const capitalize = (arr) => {
   });
 };
 
-const initCap = (text) => {
+export const initCap = (text) => {
   let list = text.replaceAll(/(\r\n|\n|\r|\t+|\s+)/gm, ' ').split(' ');
   for (let i = 0; i < list.length; i++) {
     list[i] =
@@ -15,7 +15,7 @@ const initCap = (text) => {
   return list.join(' ');
 };
 
-const formatCurrency = (value) => {
+export const formatCurrency = (value) => {
   if (value) {
     return Number(value).toLocaleString('pt-bt', {
       style: 'currency',
@@ -32,7 +32,7 @@ export const formatInfo = (obj) => {
   };
 };
 
-const formatDoc = (value) => {
+export const formatDoc = (value) => {
   if (value) {
     if (value.length == 14)
       return value.replace(
@@ -44,17 +44,17 @@ const formatDoc = (value) => {
   }
 };
 
-const formatDate = (value) => {
+export const formatDate = (value) => {
   if (value) return value.toLocaleDateString('pt-br');
 };
 
-const formatDescription = (value) => {
+export const formatDescription = (value) => {
   if (value) {
     return value.replaceAll(/(\r\n|\n|\r|\t+|\s+)/gm, ' ').trim();
   }
 };
 
-const captureQuote = (value) => {
+export const captureQuote = (value) => {
   const re = /[\"|\'](?<description>.+)[\"|\']/gim;
   const result = re.exec(value.replaceAll(/\s{2,}/gim, ' '));
   return result
