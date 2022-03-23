@@ -1,17 +1,31 @@
 import { getCities } from '../../util/getCitiesByDistance.js';
 
+// function handleQuote(value) {
+//   if (!value) return null;
+//   const re = /[\"|\'](?<description>.+)[\"|\']/gim;
+//   const result = re.exec(value);
+//   return result ? result.groups.description : value.trim().replaceAll(' ', '%');
+// }
+
 function handleQuote(value) {
   if (!value) return null;
-  const re = /[\"|\'](?<description>.+)[\"|\']/gim;
-  const result = re.exec(value);
-  return result ? result.groups.description : value.trim().replaceAll(' ', '%');
+  return value.replaceAll("'", '"');
+}
+
+function captureQuote(value) {
+  const re = /^\"(.*)\"$/gim;
+  if (!re.test(value)) {
+    return value.split(' ').join(' and ');
+  } else {
+    return value;
+  }
 }
 
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
   const cidade = query.cidade?.split(',')[0].toUpperCase();
-  const descricao = handleQuote(query.descricaoFilter);
+  const descricao = captureQuote(handleQuote(query.descricaoFilter));
 
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
@@ -55,7 +69,7 @@ export default (query) => {
     
              --where lic.id = @id_lic_finalizada 
              where tsl.nome = 'Finalizada' -- 
-             ${descricao ? `and i.Descricao Like '%${descricao}%'` : ''}
+             ${descricao ? `and contains(i.descricao,'${descricao}')` : ''}
              ${microrregiao ? `and mun.ID_MICROREGIAO = ${microrregiao}` : ''}
              ${orgao ? `and ug.id = ${orgao}` : ''}
              ${municipio ? `and mun.ID_MUNICIPIO = ${municipio}` : ''}

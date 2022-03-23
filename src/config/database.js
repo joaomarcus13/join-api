@@ -1,4 +1,4 @@
-const config = (database = 'compras') => {
+const config = (database = 'nugei') => {
   return {
     user: process.env.USER,
     password: process.env.PASSWORD,

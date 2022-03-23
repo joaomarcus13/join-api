@@ -16,7 +16,7 @@ export default {
         values: result.recordset[0],
       });
     } catch (err) {
-      console.log('err', err);
+      // console.log('err', err);
       return response.status(500).send(err);
     }
   },
