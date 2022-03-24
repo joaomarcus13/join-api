@@ -1,32 +1,12 @@
 import { getCities } from '../../util/getCitiesByDistance.js';
-
-// function handleQuote(value) {
-//   if (!value) return null;
-//   const re = /[\"|\'](?<description>.+)[\"|\']/gim;
-//   const result = re.exec(value);
-//   return result ? result.groups.description : value.trim().replaceAll(' ', '%');
-// }
-function handleQuote(value) {
-  if (!value) return null;
-  return value.replace(/^(\')(.*)(\')$/gim, '"$2"');
-}
-
-function captureQuote(value) {
-  if (value) {
-    const re = /^\"(.*)\"$/gim;
-    if (!re.test(value)) {
-      return value.split(' ').join(' and ');
-    } else {
-      return value;
-    }
-  }
-}
+import { handleQuote, captureQuote } from '../../util/formatValues.js';
 
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
   const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
-  const descricao = captureQuote(handleQuote(query.descricaoFilter));
+  const descricao = captureQuote(handleQuote(query.descricaoFilter?.trim()));
+  console.log('descricao', descricao);
 
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
@@ -43,7 +23,7 @@ export default (query) => {
 
   const maxValue = parse(query.valuesAmplitude)?.max;
   const minValue = parse(query.valuesAmplitude)?.min;
-  const avgValue = parse(query.valuesAmplitude)?.avg;
+  // const avgValue = parse(query.valuesAmplitude)?.avg;
 
   function getReferencePrice() {
     const reference = {

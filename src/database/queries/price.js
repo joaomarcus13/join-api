@@ -1,38 +1,16 @@
 import { getCities } from '../../util/getCitiesByDistance.js';
-
-// function handleQuote(value) {
-//   if (!value) return null;
-//   const re = /[\"|\'](?<description>.+)[\"|\']/gim;
-//   const result = re.exec(value);
-//   return result ? result.groups.description : value.trim().replaceAll(' ', '%');
-// }
-
-function handleQuote(value) {
-  if (!value) return null;
-  return value.replaceAll("'", '"');
-}
-
-function captureQuote(value) {
-  const re = /^\"(.*)\"$/gim;
-  if (!re.test(value)) {
-    return value.split(' ').join(' and ');
-  } else {
-    return value;
-  }
-}
+import { handleQuote, captureQuote } from '../../util/formatValues.js';
 
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
   const cidade = query.cidade?.split(',')[0].toUpperCase();
-  const descricao = captureQuote(handleQuote(query.descricaoFilter));
+  const descricao = captureQuote(handleQuote(query.descricaoFilter?.trim()));
 
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
   const microrregiao = parse(query.microrregiaoFilter)?.id;
   const distancia = getCities(cidade, query.distanciaFilter);
-  // const valorMinimo = parse(query.faixaPrecoFilter)?.minimo;
-  // let valorMaximo = parse(query.faixaPrecoFilter)?.maximo;
   const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
   const dataFim = parse(query.periodoHomologacaoFilter)?.end;
 
@@ -56,8 +34,8 @@ export default (query) => {
         select 
         distinct
         MAX(i.VALOR_UNITARIO) over (order by getdate())  [max],
-        MIN(i.VALOR_UNITARIO) over (order by getdate()) [min],
-        avg(i.VALOR_UNITARIO) over (order by getdate()) [avg]
+        MIN(i.VALOR_UNITARIO) over (order by getdate()) [min]
+        --avg(i.VALOR_UNITARIO) over (order by getdate()) [avg]
         from licitacoesweb.item i 
              inner join licitacoesweb.lote lo on lo.id = i.ID_LOTE 
              inner join licitacoesweb.PARTICIPACAO p on p.id = lo.ID_PARTICIPACAO 
