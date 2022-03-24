@@ -31,12 +31,12 @@ export default (query) => {
   const orgao = query.orgaoFilter;
   const microrregiao = parse(query.microrregiaoFilter)?.id;
   const distancia = getCities(cidade, query.distanciaFilter);
-  const valorMinimo = parse(query.faixaPrecoFilter)?.minimo;
-  let valorMaximo = parse(query.faixaPrecoFilter)?.maximo;
+  // const valorMinimo = parse(query.faixaPrecoFilter)?.minimo;
+  // let valorMaximo = parse(query.faixaPrecoFilter)?.maximo;
   const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
   const dataFim = parse(query.periodoHomologacaoFilter)?.end;
 
-  function getString(column = 'lic.DATA_HOMOLOGACAO') {
+  function getString(column) {
     let begin,
       end = null;
     begin = dataInicio && `convert(date,'${dataInicio}',103)`;

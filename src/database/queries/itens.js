@@ -8,15 +8,17 @@ import { getCities } from '../../util/getCitiesByDistance.js';
 // }
 function handleQuote(value) {
   if (!value) return null;
-  return value.replaceAll("'", '"');
+  return value.replace(/^(\')(.*)(\')$/gim, '"$2"');
 }
 
 function captureQuote(value) {
-  const re = /^\"(.*)\"$/gim;
-  if (!re.test(value)) {
-    return value.split(' ').join(' and ');
-  } else {
-    return value;
+  if (value) {
+    const re = /^\"(.*)\"$/gim;
+    if (!re.test(value)) {
+      return value.split(' ').join(' and ');
+    } else {
+      return value;
+    }
   }
 }
 
@@ -34,24 +36,14 @@ export default (query) => {
   let valorMaximo = parse(query.faixaPrecoFilter)?.maximo;
   const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
   const dataFim = parse(query.periodoHomologacaoFilter)?.end;
-  const esfera = null;
-  // const esfera = parse(query.esferaFilter);
+  const esfera = parse(query.esferaFilter);
   let { page, limit, sort, order } = query;
 
   let referencePrice = query.referencePrice;
-  //console.log('referencePrice', referencePrice);
 
   const maxValue = parse(query.valuesAmplitude)?.max;
   const minValue = parse(query.valuesAmplitude)?.min;
   const avgValue = parse(query.valuesAmplitude)?.avg;
-
-  // console.log(page);
-  // console.log(query);
-
-  // console.log('max', maxValue);
-  // console.log('min', minValue);
-  // console.log('calc max', maxValue - (maxValue - minValue) * 0.3);
-  // console.log('calc min', minValue + (maxValue - minValue) * 0.3);
 
   function getReferencePrice() {
     const reference = {
@@ -64,8 +56,7 @@ export default (query) => {
     return reference[referencePrice] || '';
   }
 
-  function getString(column = 'lic.DATA_HOMOLOGACAO') {
-    // console.log('column', column);
+  function getString(column) {
     let begin,
       end = null;
     if (column == 'i.VALOR_UNITARIO') {
@@ -121,7 +112,7 @@ export default (query) => {
            ${descricao ? `and contains(i.descricao,'${descricao}')` : ''}
            ${microrregiao ? `and mun.ID_MICROREGIAO = ${microrregiao}` : ''}
            ${orgao ? `and ug.id = ${orgao}` : ''}
-           ${esfera ? `and ug.id_esfera in (${esfera.join()})` : ''}
+           ${esfera ? `and ug.id_esfera = ${esfera}` : ''}
            ${municipio ? `and mun.ID_MUNICIPIO = ${municipio}` : ''}
            ${getString('i.VALOR_UNITARIO')}
            ${distancia ? `and mun.ID_MUNICIPIO in ( ${distancia} )` : ''}
