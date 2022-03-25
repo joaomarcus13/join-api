@@ -8,7 +8,7 @@ import MunicipiosController from './controllers/MunicipiosController.js';
 const routes = Router();
 
 routes.get('/itens', ItensController.index);
-routes.get('/filter/orgao', FilterOrgaoController.index);
+routes.get('/orgaos', FilterOrgaoController.index);
 routes.get('/licitacoes/info', InfoLicitacoesController.index);
 routes.get('/price', ValuesPriceController.index);
 routes.get('/municipios', MunicipiosController.index);

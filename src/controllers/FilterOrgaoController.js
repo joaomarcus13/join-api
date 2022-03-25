@@ -19,7 +19,6 @@ const mock2 = Object.entries(cities).map(([key, value]) => ({
 export default {
   async index(request, response) {
     const queryString = queryFilterOrgao(request.query);
-    // console.log(queryString);
     // return response.json(mock2);
     try {
       const result = await db(queryString, 'Jurisdicionado');

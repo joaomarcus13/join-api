@@ -2,17 +2,15 @@ import { getCities } from '../../util/getCitiesByDistance.js';
 import { handleQuote, prepareText } from '../../util/formatValues.js';
 
 export default (query) => {
-  const parse = (value) => value && JSON.parse(value);
-
   const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
   const descricao = prepareText(handleQuote(query.descricaoFilter?.trim()));
 
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
-  const microrregiao = parse(query.microrregiaoFilter)?.id;
+  const microrregiao = query.microrregiaoFilter;
   const distancia = getCities(cidade, query.distanciaFilter);
-  const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
-  const dataFim = parse(query.periodoHomologacaoFilter)?.end;
+  const dataInicio = query.inicio;
+  const dataFim = query.fim;
 
   function getString(column) {
     let begin,

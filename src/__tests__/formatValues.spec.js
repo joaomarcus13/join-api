@@ -6,10 +6,10 @@ describe('format functions', () => {
     expect(fn.formatCurrency('1234567.89')).toMatch('R$ 1.234.567,89');
   });
 
-  it('should prepare text to add in full text search', () => {
-    expect(fn.prepareText('"text"')).toMatch('text');
-    expect(fn.prepareText('text text2')).toMatch('text and text2');
-    expect(fn.prepareText('text %@# text2')).toMatch('text and text2');
+  it('should remove spaces and invalids characters and add "and" if word is not in quote', () => {
+    expect(fn.prepareText('"text    "')).toMatch('text');
+    expect(fn.prepareText('text text2 ')).toMatch('text and text2');
+    expect(fn.prepareText('text %@# text2 tex@t')).toMatch('text and text2');
     expect(fn.prepareText('text   text2 ')).toMatch('text and text2');
     expect(fn.prepareText('"text   text2 ')).toMatch('text and text2');
     expect(fn.prepareText(null)).toBeUndefined();

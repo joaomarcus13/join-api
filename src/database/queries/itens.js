@@ -2,7 +2,13 @@ import { getCities } from '../../util/getCitiesByDistance.js';
 import { handleQuote, prepareText } from '../../util/formatValues.js';
 
 export default (query) => {
-  const parse = (value) => value && JSON.parse(value);
+  const parse = (value) => {
+    try {
+      return JSON.parse(value);
+    } catch (_) {
+      return null;
+    }
+  };
 
   const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
   const descricao = prepareText(handleQuote(query.descricaoFilter?.trim()));
@@ -10,11 +16,11 @@ export default (query) => {
   const orgao = query.orgaoFilter;
   const microrregiao = query.microrregiaoFilter;
   const distancia = getCities(cidade, query.distanciaFilter);
-  const valorMinimo = parse(query.faixaPrecoFilter)?.minimo;
-  let valorMaximo = parse(query.faixaPrecoFilter)?.maximo;
-  const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
-  const dataFim = parse(query.periodoHomologacaoFilter)?.end;
-  const esfera = parse(query.esferaFilter);
+  const valorMinimo = query.minimo;
+  let valorMaximo = query.maximo;
+  const dataInicio = query.inicio;
+  const dataFim = query.fim;
+  const esfera = query.esferaFilter;
   let { page, limit, sort, order } = query;
 
   let referencePrice = query.referencePrice;
@@ -23,13 +29,17 @@ export default (query) => {
   const minValue = parse(query.valuesAmplitude)?.min;
   // const avgValue = parse(query.valuesAmplitude)?.avg;
 
+  // console.log(query);
+
   function getReferencePrice() {
+    if (!minValue || !maxValue) return '';
+    const min = (perc) => (minValue + (maxValue - minValue) * perc).toFixed(2);
+    const max = (perc) => (maxValue - (maxValue - minValue) * perc).toFixed(2);
+
     const reference = {
-      min: `and i.VALOR_UNITARIO < ${minValue + (maxValue - minValue) * 0.3}`,
-      max: `and i.VALOR_UNITARIO > ${maxValue - (maxValue - minValue) * 0.3}`,
-      avg: `and i.VALOR_UNITARIO between ${
-        minValue + (maxValue - minValue) * 0.15
-      } and ${maxValue - (maxValue - minValue) * 0.15}`,
+      min: `and i.VALOR_UNITARIO < ${min(0.3)}`,
+      max: `and i.VALOR_UNITARIO > ${max(0.3)}`,
+      avg: `and i.VALOR_UNITARIO between ${min(0.15)} and ${max(0.15)}`,
     };
     return reference[referencePrice] || '';
   }

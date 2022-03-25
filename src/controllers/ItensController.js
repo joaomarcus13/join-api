@@ -144,12 +144,9 @@ const mock = {
 export default {
   async index(request, response) {
     const queryString = queryItens(request.query);
-    // console.log(request.query);
-    console.log('string', queryString);
-    // return response.json(mock);
+    console.log(queryString);
     try {
       const result = await db(queryString);
-      // console.log(format(result.recordset, descricaoFilter));
       return response.json({
         itens: format(result.recordset),
         count: result.rowsAffected[result.rowsAffected.length - 1],

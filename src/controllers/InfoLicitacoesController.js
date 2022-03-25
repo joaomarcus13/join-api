@@ -5,7 +5,6 @@ import { formatInfo } from '../util/formatValues.js';
 export default {
   async index(request, response) {
     const queryString = queryInfoLicitacoes;
-    // console.log(queryString);
     // return response.json(
     //   formatInfo({
     //     valor_total: 100000,

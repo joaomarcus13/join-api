@@ -6,7 +6,7 @@ export const handleQuote = (value) => {
 export const prepareText = (value) => {
   if (value) {
     const re = /^\"(.*)\"$/gim;
-    const text = removeSpace(removeCaracters(accent(value))).trim();
+    const text = removeSpace(removeCaracters(accent(value)));
     if (!re.test(value)) {
       return text.split(' ').join(' and ');
     } else {
@@ -23,7 +23,7 @@ export const capitalize = (arr) => {
 
 const removeSpace = (text) => {
   if (text) {
-    return text.replaceAll(/(\r\n|\n|\r|\t+|\s+)/gm, ' ');
+    return text.replaceAll(/(\r\n|\n|\r|\t+|\s+)/gm, ' ').trim();
   }
 };
 
@@ -77,12 +77,6 @@ export const formatDate = (value) => {
   if (value) return value.toLocaleDateString('pt-br');
 };
 
-export const formatDescription = (value) => {
-  if (value) {
-    return removeSpace(value).trim();
-  }
-};
-
 export const accent = (text) =>
   text && text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
@@ -93,7 +87,7 @@ export default function format(arr) {
       valor: formatCurrency(obj.valor),
       doc: formatDoc(obj.doc),
       data_homologacao: formatDate(obj.data_homologacao),
-      descricao: formatDescription(obj.descricao),
+      descricao: removeSpace(obj.descricao),
       municipio: obj.municipio.toUpperCase(),
     };
   });
