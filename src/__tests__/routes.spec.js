@@ -1,5 +1,5 @@
 import { jest, expect, test, describe } from '@jest/globals';
-import { app } from '../../server.js';
+import { app } from '..//server.js';
 import superTest from 'supertest';
 
 describe('Get itens', () => {

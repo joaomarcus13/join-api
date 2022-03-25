@@ -80,7 +80,7 @@ export const formatDate = (value) => {
 
 export const formatDescription = (value) => {
   if (value) {
-    return value.replaceAll(/(\r\n|\n|\r|\t+|\s+)/gm, ' ').trim();
+    return removeSpace(value).trim();
   }
 };
 
