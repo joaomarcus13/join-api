@@ -1,6 +1,7 @@
 import queryItens from '../database/queries/itens.js';
 import db from '../database/connection.js';
 import format from '../util/formatValues.js';
+import { logger } from './../util/logger.js';
 
 const mock = {
   itens: [
@@ -142,19 +143,19 @@ const mock = {
 
 export default {
   async index(request, response) {
-    const { descricaoFilter } = request.query;
     const queryString = queryItens(request.query);
     // console.log(request.query);
-    // console.log('string', queryString);
-    return response.json(mock);
+    console.log('string', queryString);
+    // return response.json(mock);
     try {
       const result = await db(queryString);
       // console.log(format(result.recordset, descricaoFilter));
       return response.json({
-        itens: format(result.recordset, descricaoFilter),
+        itens: format(result.recordset),
         count: result.rowsAffected[result.rowsAffected.length - 1],
       });
     } catch (err) {
+      logger.error(err.message);
       return response.status(500).send(err);
     }
   },

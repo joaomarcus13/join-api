@@ -1,17 +1,11 @@
 import { getCities } from '../../util/getCitiesByDistance.js';
-
-function handleQuote(value) {
-  if (!value) return null;
-  const re = /[\"|\'](?<description>.+)[\"|\']/gim;
-  const result = re.exec(value);
-  return result ? result.groups.description : value.trim().replaceAll(' ', '%');
-}
+import { handleQuote, captureQuote } from '../../util/formatValues.js';
 
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
-  const cidade = query.cidade?.split(',')[0].toUpperCase();
-  const descricao = handleQuote(query.descricaoFilter);
+  const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
+  const descricao = captureQuote(handleQuote(query.descricaoFilter?.trim()));
 
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
@@ -20,7 +14,7 @@ export default (query) => {
   const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
   const dataFim = parse(query.periodoHomologacaoFilter)?.end;
 
-  function getString(column = 'lic.DATA_HOMOLOGACAO') {
+  function getString(column) {
     let begin,
       end = null;
     begin = dataInicio && `convert(date,'${dataInicio}',103)`;
@@ -39,8 +33,8 @@ export default (query) => {
         select 
         distinct
         MAX(i.VALOR_UNITARIO) over (order by getdate())  [max],
-        MIN(i.VALOR_UNITARIO) over (order by getdate()) [min],
-        avg(i.VALOR_UNITARIO) over (order by getdate()) [avg]
+        MIN(i.VALOR_UNITARIO) over (order by getdate()) [min]
+        --avg(i.VALOR_UNITARIO) over (order by getdate()) [avg]
         from licitacoesweb.item i 
              inner join licitacoesweb.lote lo on lo.id = i.ID_LOTE 
              inner join licitacoesweb.PARTICIPACAO p on p.id = lo.ID_PARTICIPACAO 
@@ -52,7 +46,7 @@ export default (query) => {
     
              --where lic.id = @id_lic_finalizada 
              where tsl.nome = 'Finalizada' -- 
-             ${descricao ? `and i.Descricao Like '%${descricao}%'` : ''}
+             ${descricao ? `and contains(i.descricao,'${descricao}')` : ''}
              ${microrregiao ? `and mun.ID_MICROREGIAO = ${microrregiao}` : ''}
              ${orgao ? `and ug.id = ${orgao}` : ''}
              ${municipio ? `and mun.ID_MUNICIPIO = ${municipio}` : ''}

@@ -3,7 +3,7 @@ import { accent } from '../util/formatValues.js';
 
 export default {
   async index(request, response) {
-    // console.log(request.query.q);
+    console.log(request.query.q);
     const { q } = request.query;
     let filtered = q
       ? municipios

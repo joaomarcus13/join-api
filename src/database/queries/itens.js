@@ -1,17 +1,12 @@
 import { getCities } from '../../util/getCitiesByDistance.js';
-
-function handleQuote(value) {
-  if (!value) return null;
-  const re = /[\"|\'](?<description>.+)[\"|\']/gim;
-  const result = re.exec(value);
-  return result ? result.groups.description : value.trim().replaceAll(' ', '%');
-}
+import { handleQuote, captureQuote } from '../../util/formatValues.js';
 
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
   const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
-  const descricao = handleQuote(query.descricaoFilter);
+  const descricao = captureQuote(handleQuote(query.descricaoFilter?.trim()));
+  console.log('descricao', descricao);
 
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
@@ -21,6 +16,7 @@ export default (query) => {
   let valorMaximo = parse(query.faixaPrecoFilter)?.maximo;
   const dataInicio = parse(query.periodoHomologacaoFilter)?.begin;
   const dataFim = parse(query.periodoHomologacaoFilter)?.end;
+  const esfera = parse(query.esferaFilter);
   let { page, limit, sort, order } = query;
 
   let referencePrice = query.referencePrice;
@@ -40,7 +36,7 @@ export default (query) => {
     return reference[referencePrice] || '';
   }
 
-  function getString(column = 'lic.DATA_HOMOLOGACAO') {
+  function getString(column) {
     let begin,
       end = null;
     if (column == 'i.VALOR_UNITARIO') {
@@ -93,9 +89,10 @@ export default (query) => {
   
            --where lic.id = @id_lic_finalizada 
            where tsl.nome = 'Finalizada' -- 
-           ${descricao ? `and i.Descricao Like '%${descricao}%'` : ''}
+           ${descricao ? `and contains(i.descricao,'${descricao}')` : ''}
            ${microrregiao ? `and mun.ID_MICROREGIAO = ${microrregiao}` : ''}
            ${orgao ? `and ug.id = ${orgao}` : ''}
+           ${esfera ? `and ug.id_esfera = ${esfera}` : ''}
            ${municipio ? `and mun.ID_MUNICIPIO = ${municipio}` : ''}
            ${getString('i.VALOR_UNITARIO')}
            ${distancia ? `and mun.ID_MUNICIPIO in ( ${distancia} )` : ''}
