@@ -1,6 +1,7 @@
 import queryItens from '../database/queries/itens.js';
 import db from '../database/connection.js';
 import format from '../util/formatValues.js';
+import { logger } from './../util/logger.js';
 
 const mock = {
   itens: [
@@ -154,7 +155,7 @@ export default {
         count: result.rowsAffected[result.rowsAffected.length - 1],
       });
     } catch (err) {
-      console.log('err', err);
+      logger.error(err.message);
       return response.status(500).send(err);
     }
   },

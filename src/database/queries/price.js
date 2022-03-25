@@ -4,7 +4,7 @@ import { handleQuote, captureQuote } from '../../util/formatValues.js';
 export default (query) => {
   const parse = (value) => value && JSON.parse(value);
 
-  const cidade = query.cidade?.split(',')[0].toUpperCase();
+  const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
   const descricao = captureQuote(handleQuote(query.descricaoFilter?.trim()));
 
   const municipio = query.cidadeFilter;
