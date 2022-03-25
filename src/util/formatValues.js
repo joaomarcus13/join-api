@@ -3,12 +3,11 @@ export const handleQuote = (value) => {
   return value.replace(/^[\'\"](.*)[\'\"]$/gim, '"$1"');
 };
 
-export const captureQuote = (value) => {
+export const prepareText = (value) => {
   if (value) {
     const re = /^\"(.*)\"$/gim;
     const text = removeSpace(removeCaracters(accent(value))).trim();
     if (!re.test(value)) {
-      console.log(text);
       return text.split(' ').join(' and ');
     } else {
       return text;
