@@ -7,11 +7,11 @@ export default {
     const queryString = queryInfoLicitacoes;
     // console.log(queryString);
     // return response.json(
-    // formatInfo({
-    //   valor_total: 100000,
-    //   quantidade_licitacoes: 100,
-    //   quantidade_itens: 100,
-    // })
+    //   formatInfo({
+    //     valor_total: 100000,
+    //     quantidade_licitacoes: 100,
+    //     quantidade_itens: 100,
+    //   })
     // );
     try {
       const result = await db(queryString);

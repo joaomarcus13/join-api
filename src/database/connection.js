@@ -1,5 +1,6 @@
 import sql from 'mssql';
 import sqlConfig from '../config/database.js';
+import { logger } from '../util/logger.js';
 
 export default async function db(queryString, database = 'nugei') {
   try {
@@ -8,7 +9,7 @@ export default async function db(queryString, database = 'nugei') {
     conn.close();
     return result;
   } catch (err) {
-    // console.log(err);
+    logger.error(err.message);
     throw new Error(err);
   }
 }

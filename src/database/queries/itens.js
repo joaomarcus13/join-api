@@ -6,8 +6,6 @@ export default (query) => {
 
   const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
   const descricao = prepareText(handleQuote(query.descricaoFilter?.trim()));
-  console.log('descricao', descricao);
-
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
   const microrregiao = query.microrregiaoFilter;

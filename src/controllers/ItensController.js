@@ -155,7 +155,6 @@ export default {
         count: result.rowsAffected[result.rowsAffected.length - 1],
       });
     } catch (err) {
-      logger.error(err.message);
       return response.status(500).send(err);
     }
   },
