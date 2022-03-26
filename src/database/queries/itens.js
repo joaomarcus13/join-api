@@ -1,16 +1,13 @@
 import { getCities } from '../../util/getCitiesByDistance.js';
-import { handleQuote, prepareText } from '../../util/formatValues.js';
+import {
+  handleQuote,
+  prepareText,
+  splitCity,
+  parse,
+} from '../../util/formatValues.js';
 
 export default (query) => {
-  const parse = (value) => {
-    try {
-      return JSON.parse(value);
-    } catch (_) {
-      return null;
-    }
-  };
-
-  const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
+  const cidade = splitCity(query.cidade);
   const descricao = prepareText(handleQuote(query.descricaoFilter?.trim()));
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
@@ -28,8 +25,6 @@ export default (query) => {
   const maxValue = parse(query.valuesAmplitude)?.max;
   const minValue = parse(query.valuesAmplitude)?.min;
   // const avgValue = parse(query.valuesAmplitude)?.avg;
-
-  // console.log(query);
 
   function getReferencePrice() {
     if (!minValue || !maxValue) return '';

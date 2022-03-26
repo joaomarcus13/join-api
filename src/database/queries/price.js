@@ -1,8 +1,12 @@
 import { getCities } from '../../util/getCitiesByDistance.js';
-import { handleQuote, prepareText } from '../../util/formatValues.js';
+import {
+  handleQuote,
+  prepareText,
+  splitCity,
+} from '../../util/formatValues.js';
 
 export default (query) => {
-  const cidade = query.cidade?.split(',')[0].toUpperCase().trim() || '';
+  const cidade = splitCity(query.cidade);
   const descricao = prepareText(handleQuote(query.descricaoFilter?.trim()));
 
   const municipio = query.cidadeFilter;

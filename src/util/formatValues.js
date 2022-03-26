@@ -7,11 +7,7 @@ export const prepareText = (value) => {
   if (value) {
     const re = /^\"(.*)\"$/gim;
     const text = removeSpace(removeCaracters(accent(value)));
-    if (!re.test(value)) {
-      return text.split(' ').join(' and ');
-    } else {
-      return text;
-    }
+    return re.test(value) ? text : text.split(' ').join(' and ');
   }
 };
 
@@ -42,6 +38,18 @@ const initCap = (text) => {
         : list[i].charAt(0) + list[i].slice(1).toLowerCase();
   }
   return list.join(' ');
+};
+
+export const splitCity = (text) => {
+  return text ? text.split(',')[0].toUpperCase().trim() : '';
+};
+
+export const parse = (value) => {
+  try {
+    return JSON.parse(value);
+  } catch (_) {
+    return null;
+  }
 };
 
 export const formatCurrency = (value) => {
