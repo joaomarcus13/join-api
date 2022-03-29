@@ -5,6 +5,7 @@ export default {
   async index(request, response) {
     const queryString = queryValues(request.query);
     // return response.json({ values: { max: 100, min: 10 }});
+    // console.log(queryString);
     try {
       const result = await db(queryString);
       // console.log('result', result.recordset[0]);

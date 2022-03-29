@@ -27,7 +27,9 @@ export default (query) => {
   // const avgValue = parse(query.valuesAmplitude)?.avg;
 
   function getReferencePrice() {
-    if (!minValue || !maxValue) return '';
+    console.log(minValue, maxValue);
+    const falsy = (value) => isNaN(value) || value === null || value === '';
+    if (falsy(minValue) || falsy(maxValue)) return '';
     const min = (perc) => (minValue + (maxValue - minValue) * perc).toFixed(2);
     const max = (perc) => (maxValue - (maxValue - minValue) * perc).toFixed(2);
 

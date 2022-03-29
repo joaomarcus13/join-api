@@ -3,13 +3,6 @@ export const handleQuote = (value) => {
   return value.replace(/^[\'\"](.*)[\'\"]$/gim, '"$1"');
 };
 
-// export const prepareText = (value) => {
-//   if (value) {
-//     const re = /^\"(.*)\"$/gim;
-//     const text = removeSpace(removeCaracters(accent(value)));
-//     return re.test(value) ? text : text.split(' ').join(' and ');
-//   }
-// };
 export const prepareText = (value) => {
   const captureNot = (text) => {
     return text.replaceAll(/-((?:[\"\'])?[a-z0-9]+(?:[\"\'])?)/gim, 'not $1');
