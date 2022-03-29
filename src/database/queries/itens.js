@@ -1,4 +1,4 @@
-import { getCities } from '../../util/getCitiesByDistance.js';
+import { getCities } from '../../util/getCities.js';
 import {
   handleQuote,
   prepareText,
