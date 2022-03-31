@@ -1,9 +1,10 @@
-import cache from '../util/cache.js';
+import cache from '../config/cache.js';
 
 export const verifyCache = (request, response, next) => {
   try {
-    if (cache.has('info')) {
-      return response.status(200).json(cache.get('info'));
+    const value = cache.get('info');
+    if (value) {
+      return response.status(200).json(value);
     }
     return next();
   } catch (err) {

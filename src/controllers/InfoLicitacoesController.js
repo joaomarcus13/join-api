@@ -1,7 +1,7 @@
 import db from '../database/connection.js';
 import queryInfoLicitacoes from '../database/queries/infoLicitacoes.js';
 import { formatInfo } from '../util/formatValues.js';
-import cache from '../util/cache.js';
+import cache from '../config/cache.js';
 
 export default {
   async index(request, response) {
@@ -14,6 +14,8 @@ export default {
     //   })
     // );
     try {
+      const value = cache.get('info');
+      if (value) return response.json(value);
       const result = await db(queryString);
       cache.set('info', formatInfo(result.recordset[0]));
       return response.json(formatInfo(result.recordset[0]));

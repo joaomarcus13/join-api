@@ -11,7 +11,7 @@ const routes = Router();
 
 routes.get('/itens', ItensController.index);
 routes.get('/orgaos', FilterOrgaoController.index);
-routes.get('/licitacoes/info', verifyCache, InfoLicitacoesController.index);
+routes.get('/licitacoes/info', InfoLicitacoesController.index);
 routes.get('/valores', ValuesPriceController.index);
 routes.get('/municipios', MunicipiosController.index);
 
