@@ -1,4 +1,4 @@
-import db from '../database/connection.js';
+import db from '../database/request.js';
 import queryInfoLicitacoes from '../database/queries/infoLicitacoes.js';
 import { formatInfo } from '../util/formatValues.js';
 import cache from '../config/cache.js';

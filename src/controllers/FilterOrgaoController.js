@@ -1,4 +1,4 @@
-import db from '../database/connection.js';
+import db from '../database/request.js';
 import queryFilterOrgao from '../database/queries/filterOrgao.js';
 import cities from '../assets/DistanciaCidade.json';
 import { capitalize } from '../util/formatValues.js';
@@ -19,6 +19,7 @@ const mock2 = Object.entries(cities).map(([key, value]) => ({
 export default {
   async index(request, response) {
     const queryString = queryFilterOrgao(request.query);
+    // console.log(queryString);
     // return response.json(mock2);
     try {
       const result = await db(queryString, 'Jurisdicionado');

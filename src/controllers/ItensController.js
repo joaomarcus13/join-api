@@ -1,5 +1,5 @@
 import queryItens from '../database/queries/itens.js';
-import db from '../database/connection.js';
+import db from '../database/request.js';
 import format from '../util/formatValues.js';
 import { logger } from './../util/logger.js';
 

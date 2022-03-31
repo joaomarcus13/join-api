@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { verifyCache } from './middleware/verifyCache.js';
 import ItensController from './controllers/ItensController.js';
 import FilterOrgaoController from './controllers/FilterOrgaoController.js';
 import InfoLicitacoesController from './controllers/InfoLicitacoesController.js';
