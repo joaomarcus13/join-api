@@ -16,7 +16,7 @@ export default async function (queryString) {
     return result;
   } catch (err) {
     logger.error(err.message);
-    // throw new Error(err);
+    throw new Error(err);
   }
 }
 
