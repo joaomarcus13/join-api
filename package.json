@@ -4,9 +4,10 @@
   "description": "",
   "type": "module",
   "main": "index.js",
+  "private": "true",
   "scripts": {
     "start": "node --no-warnings --experimental-json-modules  src/index.js",
-    "live-reload": "nodemon --no-warnings --experimental-json-modules  src/index.js",
+    "dev": "nodemon --no-warnings --experimental-json-modules  src/index.js",
     "build": "node --no-warnings --experimental-json-modules src/build/build.js",
     "test": "jest"
   },
