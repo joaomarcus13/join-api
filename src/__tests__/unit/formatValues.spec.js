@@ -1,5 +1,6 @@
 import { jest, expect, test, describe } from '@jest/globals';
-import * as fn from '../util/formatValues.js';
+import * as fn from '../../util/formatValues.js';
+import { getCities } from '../../util/getCities.js';
 
 describe('format functions', () => {
   it('should return a string with the currency format', () => {
@@ -19,5 +20,14 @@ describe('format functions', () => {
     expect(fn.handleQuote('"text"')).toMatch('text');
     expect(fn.handleQuote("'text'")).toMatch('text');
     expect(fn.handleQuote("text'")).toMatch('text');
+  });
+});
+
+describe('get cities', () => {
+  it('should return id of cities', () => {
+    expect(getCities('teresina', 40)).toBe('8,66,224,216');
+    expect(getCities(null, 40)).toBe(null);
+    expect(getCities(0, 40)).toBe(null);
+    expect(getCities('teresina', 0)).toBe(null);
   });
 });
