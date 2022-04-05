@@ -10,7 +10,7 @@
     "dev": "nodemon --no-warnings --experimental-json-modules  src/index.js",
     "build": "node --no-warnings --experimental-json-modules src/build/build.js",
     "test:unit": "jest --testPathPattern=src/__tests__/unit",
-    "test:functional": "jest --testPathPattern=src/__tests__/functional"
+    "test:integ": "jest --testPathPattern=src/__tests__/integration"
   },
   "keywords": [],
   "author": "",

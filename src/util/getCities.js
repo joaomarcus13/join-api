@@ -15,6 +15,7 @@ function calculateDistance(a, b) {
 
 export function getCities(city, km) {
   const result = [];
+  city = String(city)?.toUpperCase();
   const toCompare = cities[city];
   if (!toCompare || !parseInt(km)) return null;
   Object.values(cities).forEach((values) => {

@@ -46,7 +46,7 @@ const initCap = (text) => {
 };
 
 export const splitCity = (text) => {
-  return text ? text.split(',')[0].toUpperCase().trim() : '';
+  return text ? text.split(',')[0].trim() : '';
 };
 
 export const parse = (value) => {
