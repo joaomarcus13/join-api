@@ -1,5 +1,5 @@
 import { jest, expect, test, describe } from '@jest/globals';
-import * as fn from '../util/formatValues.js';
+import * as fn from '../../util/formatValues.js';
 
 describe('format functions', () => {
   it('should return a string with the currency format', () => {
