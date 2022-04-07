@@ -7,12 +7,15 @@ import {
 } from '../../util/formatValues.js';
 
 export default (query) => {
-  const cidade = splitCity(query.cidade);
-  const descricao = prepareText(handleQuote(query.descricaoFilter?.trim()));
+  const cidade = query.cidade && splitCity(query.cidade);
+  const descricao =
+    query.descricaoFilter &&
+    prepareText(handleQuote(query.descricaoFilter?.trim()));
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
   const microrregiao = query.microrregiaoFilter;
-  const distancia = getCities(cidade, query.distanciaFilter);
+  const distancia =
+    query.distanciaFilter && getCities(cidade, query.distanciaFilter);
   const valorMinimo = query.minimo;
   let valorMaximo = query.maximo;
   const dataInicio = query.inicio;

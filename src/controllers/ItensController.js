@@ -78,7 +78,7 @@ const mock = {
 export default {
   async index(request, response) {
     const queryString = queryItens(request.query);
-    console.log(queryString);
+    // console.log(queryString);
     // return response.json(mock);
     try {
       const result = await db(queryString);
