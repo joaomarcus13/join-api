@@ -15,6 +15,7 @@ export default (query) => {
   const distancia = getCities(cidade, query.distanciaFilter);
   const dataInicio = query.inicio;
   const dataFim = query.fim;
+  const esfera = query.esferaFilter;
 
   function getString(column) {
     let begin,
@@ -51,6 +52,7 @@ export default (query) => {
              ${descricao ? `and contains(i.descricao,'${descricao}')` : ''}
              ${microrregiao ? `and mun.ID_MICROREGIAO = ${microrregiao}` : ''}
              ${orgao ? `and ug.id = ${orgao}` : ''}
+             ${esfera ? `and ug.id_esfera = ${esfera}` : ''}
              ${municipio ? `and mun.ID_MUNICIPIO = ${municipio}` : ''}
              ${distancia ? `and mun.ID_MUNICIPIO in ( ${distancia} )` : ''}
              ${getString('lic.DATA_HOMOLOGACAO')}
