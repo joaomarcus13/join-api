@@ -7,7 +7,7 @@ const mock = {
   itens: [
     {
       descricao:
-        'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quod ex consequatur odit quis. Eligendi doloribus corporis perspiciatis suscipit, minus odit tenetur ex sed quasi perferendis, debitis autem nulla error culpa.',
+        'mouse sem fio para computador lorem ipsum dolor sit amet consectetur adipiscing elit',
       valor: 'R$ 1.000,00',
       municipio: 'São Paulo',
       orgao: 'Prefeitura de São Paulo',
@@ -79,7 +79,7 @@ export default {
   async index(request, response) {
     const queryString = queryItens(request.query);
     // console.log(queryString);
-    // return response.json(mock);
+    return response.json(mock);
     try {
       const result = await db(queryString);
       return response.json({
