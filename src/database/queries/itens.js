@@ -65,15 +65,44 @@ export default (query) => {
     }
   }
 
+  function getFiltersString() {
+    return `${descricao ? `and contains(i.descricao,'${descricao}')` : ''}
+    ${microrregiao ? `and mun.ID_MICROREGIAO = ${microrregiao}` : ''}
+    ${orgao ? `and ug.id = ${orgao}` : ''}
+    ${esfera ? `and ug.id_esfera = ${esfera}` : ''}
+    ${municipio ? `and mun.ID_MUNICIPIO = ${municipio}` : ''}
+    ${getString('i.VALOR_UNITARIO')}
+    ${distancia ? `and mun.ID_MUNICIPIO in ( ${distancia} )` : ''}
+    ${getString('lic.DATA_HOMOLOGACAO')}
+    ${getReferencePrice()}`;
+  }
+
   return `
-      --declare @id_lic_finalizada int =  516907
-      --declare @Qtd_lic_finalizada int
-      --Select @Qtd_lic_finalizada = (Select count(*) From licitacoesweb.licitacao Where ID_STATUS_LICITACAO = 3)
+      DECLARE @qnt INT 
       DECLARE @limit INT = ${limit || 20},
               @page  INT = ${page || 1};
+
+      ${
+        page == 1
+          ? `  SELECT @qnt = (
+        select count(*)
+           from licitacoesweb.item i
+           inner join licitacoesweb.lote lo on lo.id = i.ID_LOTE
+           inner join licitacoesweb.PARTICIPACAO p on p.id = lo.ID_PARTICIPACAO
+           inner join licitacoesweb.licitacao lic on lic.id = p.ID_LICITACAO
+           inner join licitacoesweb.licitante lte on lte.id = p.ID_LICITANTE
+           inner join licitacoesweb.TIPO_STATUS_LICITACAO tsl on tsl.id = lic.ID_STATUS_LICITACAO
+           inner join Jurisdicionado.dbo.crp_unidadeGestora ug on ug.id = lic.ID_UNIDADE_GESTORA
+           inner join Jurisdicionado.dbo.CRP_MUNICIPIO mun on mun.ID_MUNICIPIO = ug.ID_MUNICIPIO
+           where tsl.nome = 'Finalizada' --
+           ${getFiltersString()}
+      )`
+          : ''
+      }
   
-      select 
+      SELECT 
              --@Qtd_lic_finalizada Qtd_lic_finalizada, 
+              @qnt qnt,
               lic.id id_tce,
               ug.nm_nome orgao,
               lic.NUMERO_PROCESSO_TCE,
@@ -96,16 +125,8 @@ export default (query) => {
   
            --where lic.id = @id_lic_finalizada 
            where tsl.nome = 'Finalizada' -- 
-           ${descricao ? `and contains(i.descricao,'${descricao}')` : ''}
-           ${microrregiao ? `and mun.ID_MICROREGIAO = ${microrregiao}` : ''}
-           ${orgao ? `and ug.id = ${orgao}` : ''}
-           ${esfera ? `and ug.id_esfera = ${esfera}` : ''}
-           ${municipio ? `and mun.ID_MUNICIPIO = ${municipio}` : ''}
-           ${getString('i.VALOR_UNITARIO')}
-           ${distancia ? `and mun.ID_MUNICIPIO in ( ${distancia} )` : ''}
-           ${getString('lic.DATA_HOMOLOGACAO')}
-           ${getReferencePrice()}
-  
+           ${getFiltersString()}
+        
            ORDER BY ${sort || 'i.DESCRICAO'} ${order || 'asc'}
            OFFSET (@page - 1) * @limit ROWS
            FETCH NEXT @limit ROWS ONLY;
