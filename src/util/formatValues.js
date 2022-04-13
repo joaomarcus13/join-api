@@ -101,7 +101,7 @@ export default function format(arr) {
       doc: formatDoc(obj.doc),
       data_homologacao: formatDate(obj.data_homologacao),
       descricao: removeSpace(obj.descricao),
-      municipio: obj.municipio.toUpperCase(),
+      municipio: obj.municipio,
     };
   });
 }

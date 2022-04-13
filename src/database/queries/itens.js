@@ -104,13 +104,13 @@ export default (query) => {
              --@Qtd_lic_finalizada Qtd_lic_finalizada, 
               @qnt qnt,
               lic.id id_tce,
-              ug.nm_nome orgao,
+              dbo.ajeita(ug.nm_nome) orgao,
               lic.NUMERO_PROCESSO_TCE,
               lic.DATA_ABERTURA data_abertura,
               lic.DATA_HOMOLOGACAO data_homologacao,
-              mun.NM_NOME municipio,
+              dbo.ajeita(mun.NM_NOME) municipio,
               i.DESCRICAO descricao, 
-              lte.NOME nome, 
+              dbo.ajeita(lte.NOME) nome, 
               IsNULL(lte.cnpj, lte.cpf) doc,
               i.QUANTIDADE quantidade, 
               IsNULL(i.VALOR_UNITARIO,0) valor
@@ -127,7 +127,7 @@ export default (query) => {
            where tsl.nome = 'Finalizada' -- 
            ${getFiltersString()}
         
-           ORDER BY ${sort || 'i.DESCRICAO'} ${order || 'asc'}
+           ORDER BY ${sort || 'i.VALOR_UNITARIO'} ${order || 'asc'}
            OFFSET (@page - 1) * @limit ROWS
            FETCH NEXT @limit ROWS ONLY;
   `;
