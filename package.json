@@ -1,5 +1,5 @@
 {
-  "name": "backend",
+  "name": "join-api",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -13,7 +13,11 @@
     "test:integ": "jest --testPathPattern=src/__tests__/integration"
   },
   "keywords": [],
-  "author": "",
+  "author": "joao marcos",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joaomarcus13/join-api"
+  },
   "license": "ISC",
   "dependencies": {
     "babel": "^6.23.0",

@@ -8,7 +8,6 @@ export default {
     // console.log(queryString);
     try {
       const result = await db(queryString);
-      // console.log('result', result.recordset[0]);
       return response.json({
         values: result.recordset[0],
       });

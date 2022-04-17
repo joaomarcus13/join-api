@@ -23,7 +23,6 @@ export default {
     // return response.json(mock2);
     try {
       const result = await db(queryString);
-      // capitalize(result.recordset);
       return response.json(result.recordset);
     } catch (err) {
       return response.status(500).send(err);

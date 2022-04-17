@@ -10,7 +10,7 @@ const mock = {
       valor: 'R$ 122.000.000,00',
       municipio: 'São Paulo',
       orgao: 'Prefeitura de São Paulo',
-      data_homologacao: '01/01/2020',
+      data_homologacao: '15/02/2022',
       nome: 'João da Silva lsgfmgregn nmgrkegnmer ',
       doc: '123.456.789-10',
       NUMERO_PROCESSO_TCE: 'TC/1234/2019',
@@ -21,7 +21,7 @@ const mock = {
       valor: 'R$ 1.000,00',
       municipio: 'São Paulo',
       orgao: 'Prefeitura de São Paulo de minas e energia ltda',
-      data_homologacao: '01/01/2020',
+      data_homologacao: '01/01/3020',
       nome: 'João da Silva',
       doc: '123.456.789-10',
       NUMERO_PROCESSO_TCE: 'TC/1234/2019',
@@ -72,6 +72,7 @@ const mock = {
     },
   ],
   count: 10,
+  qnt: 100,
 };
 
 export default {
