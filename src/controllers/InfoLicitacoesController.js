@@ -6,13 +6,6 @@ import cache from '../config/cache.js';
 export default {
   async index(request, response) {
     const queryString = queryInfoLicitacoes;
-    // return response.json(
-    //   formatInfo({
-    //     valor_total: 100000,
-    //     quantidade_licitacoes: 100,
-    //     quantidade_itens: 100,
-    //   })
-    // );
     try {
       const value = cache.get('info');
       if (value) return response.json(value);

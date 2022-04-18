@@ -2,6 +2,8 @@ import { jest, expect, test, describe } from '@jest/globals';
 import { app } from '../../server.js';
 import superTest from 'supertest';
 
+jest.mock('axios');
+
 describe('Get itens', () => {
   test('should return itens', async () => {
     const query = {};
