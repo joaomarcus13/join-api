@@ -9,7 +9,6 @@ export const prepareText = (value) => {
   };
   if (value) {
     const text = removeSpace(removeCaracters(accent(handleQuote(value))));
-    console.log(text);
     const re = /(-?[\"\'][a-z0-9'\s+]+[\"\']|[-a-z0-9']+)/gim;
     const terms = text.match(re);
     terms[0] = terms[0].replace('-', '');
