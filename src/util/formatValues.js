@@ -8,8 +8,9 @@ export const prepareText = (value) => {
     return text.replaceAll(/-((?:[\"\'])?[a-z0-9]+(?:[\"\'])?)/gim, 'not $1');
   };
   if (value) {
-    const text = removeSpace(removeCaracters(accent(value)));
-    const re = /(-?[\"\'][a-z0-9\s+]+[\"\']|[-a-z0-9]+)/gim;
+    const text = removeSpace(removeCaracters(accent(handleQuote(value))));
+    console.log(text);
+    const re = /(-?[\"\'][a-z0-9'\s+]+[\"\']|[-a-z0-9']+)/gim;
     const terms = text.match(re);
     terms[0] = terms[0].replace('-', '');
     return terms.reduce((acc, next) => (acc += ` and ${captureNot(next)}`));
@@ -30,7 +31,7 @@ const removeSpace = (text) => {
 
 const removeCaracters = (text) => {
   if (text) {
-    return text.replaceAll(/[^a-z0-9\"\'-]/gim, ' ');
+    return text.replaceAll(/[^a-z0-9\"\'-]/gim, ' ').replaceAll("'", "''");
   }
 };
 

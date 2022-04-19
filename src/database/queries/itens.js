@@ -1,16 +1,10 @@
 import { getCities } from '../../util/getCities.js';
-import {
-  handleQuote,
-  prepareText,
-  splitCity,
-  parse,
-} from '../../util/formatValues.js';
+import { prepareText, splitCity, parse } from '../../util/formatValues.js';
 
 export default (query) => {
   const cidade = query.cidade && splitCity(query.cidade);
   const descricao =
-    query.descricaoFilter &&
-    prepareText(handleQuote(query.descricaoFilter?.trim()));
+    query.descricaoFilter && prepareText(query.descricaoFilter?.trim());
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
   const microrregiao = query.microrregiaoFilter;

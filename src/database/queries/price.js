@@ -1,13 +1,9 @@
 import { getCities } from '../../util/getCities.js';
-import {
-  handleQuote,
-  prepareText,
-  splitCity,
-} from '../../util/formatValues.js';
+import { prepareText, splitCity } from '../../util/formatValues.js';
 
 export default (query) => {
   const cidade = splitCity(query.cidade);
-  const descricao = prepareText(handleQuote(query.descricaoFilter?.trim()));
+  const descricao = prepareText(query.descricaoFilter?.trim());
 
   const municipio = query.cidadeFilter;
   const orgao = query.orgaoFilter;
