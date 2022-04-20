@@ -1,15 +1,15 @@
 export const handleQuote = (value) => {
   if (!value) return null;
-  return value.replace(/^[\'\"](.*)[\'\"]$/gim, '"$1"');
+  return value.replace(/[\'\"](.*)[\'\"]/gim, '"$1"');
 };
 
 export const prepareText = (value) => {
   const captureNot = (text) => {
-    return text.replaceAll(/-((?:[\"\'])?[a-z0-9]+(?:[\"\'])?)/gim, 'not $1');
+    return text.replace(/-((?:[\"\'])?[a-z0-9]+(?:[\"\'])?)/gim, 'not $1');
   };
   if (value) {
     const text = removeSpace(removeCaracters(accent(handleQuote(value))));
-    const re = /(-?[\"\'][a-z0-9'\s+]+[\"\']|[-a-z0-9']+)/gim;
+    const re = /(-?[\"][a-z0-9'\s+]+[\"]|[-a-z0-9']+)/gim;
     const terms = text.match(re);
     terms[0] = terms[0].replace('-', '');
     return terms.reduce((acc, next) => (acc += ` and ${captureNot(next)}`));
