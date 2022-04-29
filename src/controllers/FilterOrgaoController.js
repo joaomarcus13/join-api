@@ -6,7 +6,10 @@ export default {
     const queryString = queryFilterOrgao(request.query);
     try {
       const result = await db(queryString);
-      return response.json(result.recordset);
+      return response.json({
+        orgaos: result.recordset,
+        count: result.rowsAffected[result.rowsAffected.length - 1],
+      });
     } catch (err) {
       return response.status(500).send(err);
     }
